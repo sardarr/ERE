@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<committed_belief_doc id="tree-000000000000000">
+  <belief_annotations>
+    <relations>
+      <relation ere_id="relm-1614">
+        <trigger offset="1048" length="8">studying</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </relation>
+    </relations>
+    <events>
+      <event ere_id="em-1189">
+        <trigger offset="1905" length="4">paid</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1210">
+        <trigger offset="2276" length="4">paid</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1231">
+        <trigger offset="2536" length="4">paid</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1252">
+        <trigger offset="ent-27" length="work">gave up work</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1315">
+        <trigger offset="349" length="7">started</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1336">
+        <trigger offset="2138" length="6">paying</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1357">
+        <trigger offset="2382" length="4">paid</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1378">
+        <trigger offset="2714" length="3">pay</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1399">
+        <trigger offset="4443" length="3">pay</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-708" offset="4210" length="16">BitterAndTwisted</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1420">
+        <trigger offset="2595" length="3">pay</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1441">
+        <trigger offset="2747" length="3">buy</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1948">
+        <trigger offset="4476" length="3">buy</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-708" offset="4210" length="16">BitterAndTwisted</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1462">
+        <trigger offset="3106" length="3">buy</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1483">
+        <trigger offset="3161" length="3">buy</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1504">
+        <trigger offset="3243" length="3">pay</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1525">
+        <trigger offset="3320" length="3">buy</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1591">
+        <trigger offset="439" length="5">start</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1633">
+        <trigger offset="8" length="ent-8">took out</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1686">
+        <trigger offset="2087" length="4">give</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1758">
+        <trigger offset="983" length="4">gets</trigger>
+        <beliefs>
+          <belief type="CB" polarity="pos" sarcasm="">
+            <source ere_id="m-48" offset="14" length="5">izzoh</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1909">
+        <trigger offset="4273" length="6">BUYING</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-708" offset="4210" length="16">BitterAndTwisted</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-1969">
+        <trigger offset="4582" length="6">paying</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-708" offset="4210" length="16">BitterAndTwisted</source>
+          </belief>
+        </beliefs>
+      </event>
+      <event ere_id="em-2034">
+        <trigger offset="4655" length="6">paying</trigger>
+        <beliefs>
+          <belief type="NA" polarity="pos" sarcasm="">
+            <source ere_id="m-708" offset="4210" length="16">BitterAndTwisted</source>
+          </belief>
+        </beliefs>
+      </event>
+    </events>
+  </belief_annotations>
+</committed_belief_doc>
