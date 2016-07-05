@@ -8,7 +8,6 @@ from xml.dom import minidom
 
 poester_hash={}
 map_author={}# Mapping a number betwwen 0-n for poster to find the priority
-
 def Getting_Authors(xml_out_file):
     Train_corpus=[]
     i=0
@@ -21,9 +20,6 @@ def Getting_Authors(xml_out_file):
                 map_author[tag["author"]]=i
                 i+=1
     return Train_corpus
-
-
-
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.
     """
@@ -41,7 +37,6 @@ def find_ind(Source_str,string):
             ind=ind+len(string)
     except:
         return tmp_ar
-
 def creat_xml_relat(ere_id,trigger,offset,length,belief_type,source,s_offset,s_length,s_ere_id):
     rltion = ET.SubElement(rltions, 'relation')
     rltion.set('ere_id',ere_id)
@@ -60,7 +55,6 @@ def creat_xml_relat(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
     src.set('length',s_length)
     src.text=source
     return ET.tostring(rltion, pretty_print=True,with_tail=False, xml_declaration=False)
-
 def creat_xml_event(ere_id,trigger,offset,length,belief_type,source,s_offset,s_length,s_ere_id):
     event = ET.SubElement(evnts, 'event')
     event.set('ere_id',ere_id)
@@ -80,16 +74,12 @@ def creat_xml_event(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
     src.text=source
     return ET.tostring(event, pretty_print=True,with_tail=False, xml_declaration=False)
 poster_offset=[]
-
 #Finding the index of the poster in the document
 def find_poster(offset):
     poster_offset.append(offset)
     tmp_poster_offset=sorted(poster_offset)
     ind_of_poster=tmp_poster_offset[tmp_poster_offset.index(offset)-1]
     return ind_of_poster
-
-
-
 def list_ind(of_array,ind):
     tmp=150 #distance to word we condered az 100
     for i in range(len(of_array)):
@@ -131,7 +121,6 @@ def Trigandid(file):
                             entitiy_id.append(str(item.get('id')))#+" "+str(atrib.get('offset')))
                             Author_ere[ent_men.text]=str(item.get('id'))+" "+str(atrib.get('id'))+" "+str(atrib.get('offset'))+" "+str(atrib.get('length'))
 
-
     temp_elemrecord={}
     Array_of_Trigger=[]
     for child in root:
@@ -168,10 +157,6 @@ def Trigandid(file):
                 temp_elemrecord.clear()
 
     return Array_of_Trigger# returns array of events and entity Id
-
-
-#def find_section(file,entity)
-
 def findingCBtags(file,entityif,keyword):
     filestring=" "
     with open(file,"r") as f:
@@ -181,11 +166,7 @@ def findingCBtags(file,entityif,keyword):
         splitar=filestring.split("</post>")
        # print splitar[0].index(keyword)
 
-
-
 myarray=[]#list of the poster that we get from the input text files
-path = 'input_txt'
-
 import glob
 path = 'input_txt/*.txt'
 path_ere='ldc_ere/*.xml'
@@ -198,7 +179,6 @@ for xfl in xfiles:
     finallarray=Trigandid(xfl)
     filestring=""
     str_s=""
-   # myadd='data_orig/BT02162016/'+str(xfl[14:-13])+'.cmp.txt.xml'
     with open('belief_output/'+str(xfl[8:-13])+'.cmp.txt.xml','r') as mytagged: #reading the CB output for the old data xfl [14:13] works
         for line in mytagged:# reading that gain and finding the poster name
             filestring=filestring+" "+line# splitting the content of each poster seperately
@@ -229,9 +209,6 @@ for xfl in xfiles:
         else:
             tmp_arra.append([events.split()[0]])
         for item in tmp_arra:#tmp_arra contains
-             #for name, age in Author_ere.iteritems():
-              #      temp_ere=age.split(" ")
-                #if temp_ere[0] == item[1]:# it checks the ent id
                 try:
                         if len(item[0].split(" "))>1:
                             event_arr=item[0].split(" ")
@@ -264,7 +241,6 @@ for xfl in xfiles:
                                         creat_xml_event(events.split()[-1],item[0],events.split()[3],events.split()[2],filestring[ind-4:ind][1:-1],name,Author_ere[name].split(" ")[2],Author_ere[name].split(" ")[3],Author_ere[name].split(" ")[1])
                 except:
                     pass
-
 
     if check:
         output_file = open( 'output/'+str(xfl[8:-13])+'.best.xml', 'w' )
