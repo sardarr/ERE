@@ -229,7 +229,7 @@ for xfl in xfiles:
     filestring=""
     str_s=""
    # myadd='data_orig/BT02162016/'+str(xfl[14:-13])+'.cmp.txt.xml'
-    with open('input_cb/'+str(xfl[10:-13])+'.cmp.txt.xml','r') as mytagged: #reading the CB output for the old data xfl [14:13] works
+    with open('input_cb/'+str(xfl[10:-13])+'.cmp.txt.xml','r') as mytagged: #reading the CB pred_out for the old data xfl [14:13] works
         for line in mytagged:# reading that gain and finding the poster name
             filestring=filestring+" "+line# splitting the content of each poster seperately
         splitar=filestring.split("</post>")
