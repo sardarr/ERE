@@ -1,14 +1,18 @@
 # ERE
 
 
+This Script generates the *best.xml files, which can be used for evaluating the blief system.
+
 Requirements:
 
-1)Clone all the directories and the "main_pipeline_new.py"
+1)After downloading the directories and *.py files you need to
+  a)Copy your *.txt files in /input_src directory
+  b)Run the Belief tagger on your source /input_src/*.txt files and copy the output data into /input_cb directory.
+  c)/input_ere/ directory should contain all the corresponding *.ERE files from the LDC dataset. 
 
-2)Run the Belief tagger on your txt files and copy the input data and CB tagger output in /input_txt and /belief_output directories. 
-/ldc_ere contains the corresponding ERE files from the LDC data, which are used in creating the final ".best.xml" files.
+After running the script use the "python main_pipeline_new.py"  which generates the ".best.xml" files in /pred_out directory.
 
-For running the code from the root:
 
-python main_pipeline_tmp.py
+
+
 
