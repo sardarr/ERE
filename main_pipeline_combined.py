@@ -85,6 +85,7 @@ def creat_xml_relat(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
         trig.set('offset',offset)
         trig.set('length',str(len(trigger)))
         trig.text=trigger
+
     belfs = ET.SubElement(rltion, 'beliefs')
     belf = ET.SubElement(belfs, 'belief')
     belf.set('type',belief_type)
@@ -118,7 +119,7 @@ def creat_xml_event(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
         src.set('length',s_length)
         src.text=source
     return ET.tostring(event, pretty_print=True,with_tail=False, xml_declaration=False)
-poster_offset=[]
+
 
 #Finding the index of the poster in the document
 def find_poster(offset):
@@ -340,7 +341,7 @@ for src_Text in src_files:
                                         source_id='None'
                                         offset=None
 
-                                    print (events.split()[-1],item[0],events.split()[-2],events.split()[-3],containsAny(filestring[ind-5:ind]),source_id,offset,str(len(source_id)),str(source))#Sample out put <NA> coming em-791 | admirable m-192 1222 9
+                                    # print (events.split()[-1],item[0],events.split()[-2],events.split()[-3],containsAny(filestring[ind-5:ind]),source_id,offset,str(len(source_id)),str(source))#Sample out put <NA> coming em-791 | admirable m-192 1222 9
 
                                     if "relm" in events.split()[-1]:
                                         if rel_flag==False:
@@ -354,7 +355,36 @@ for src_Text in src_files:
                                             ev_flag=True
                                         creat_xml_event(events.split()[-1],tmp_arra[0][0],events.split()[-2],events.split()[-3],containsAny(filestring[ind-5:ind]),source_id,offset,str(len(source_id)),str(source))
                                         file_history_ent[events.split()[-1]]=1
+                            if events.split()[-1] not in file_history_ent:
+                                if(containsAny(filestring[ind-5:ind])==False):
+                                    check=True
+                                    try:
+                                        source=m_id_return(file_id,int(events.split()[-2]))
+                                        source_id_n_offset=em_poseter_table[source]
+                                        source_id=source_id_n_offset.split(',')[0]
+                                        offset=source_id_n_offset.split(',')[1]
+                                    except:
+                                        source=None
+                                        source_id='None'
+                                        offset=None
+                                    print (events.split()[-1],tmp_arra[0][0],events.split()[-2],events.split()[-3],'cb',source_id,offset,str(len(source_id)),str(source))#Sample out put <NA> coming em-791 | admirable m-192 1222 9
+
+                                    if "relm" in events.split()[-1]:
+                                        if rel_flag==False: #this is just to check if its the first elemnt to be created
+                                            rltions = ET.SubElement(Belief_ano, 'relations')
+                                            rel_flag=True
+                                        #which means there is no trigger
+
+                                        creat_xml_relat(events.split()[-1],tmp_arra[0][0],events.split()[-2],events.split()[-3],'cb',source_id,offset,str(len(source_id)),str(source))
+                                        file_history_ent[events.split()[-1]]=1
+                                    if "em" in events.split()[-1]:
+                                        if ev_flag==False:
+                                            evnts = ET.SubElement(Belief_ano, 'events')
+                                            ev_flag=True
+                                        creat_xml_event(events.split()[-1],tmp_arra[0][0],events.split()[-2],events.split()[-3],'cb',source_id,offset,str(len(source_id)),str(source))
+                                        file_history_ent[events.split()[-1]]=1
                 except:
+                    # print(xfl)
                     pass
 
 
