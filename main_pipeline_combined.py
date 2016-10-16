@@ -15,7 +15,7 @@ from xml.dom import minidom
 from os.path import basename
 
 
-with open('author_ranges.json') as data_file:
+with open('author_ranges_Chinese.json') as data_file:
     authors_offset = json.load(data_file)
 
 poster_hash={}
@@ -144,7 +144,9 @@ exclude = set(string.punctuation)
 #This is to make sure that the tag behind word is completed and is not for previous word
 def containsAny(str):
     if '<' in str and '>' in str[-2:]:
-        str = ''.join(ch for ch in str if ch not in exclude)
+        start_ind=str.index('<')
+        end_index=str.index('>')
+        str=str[start_ind+1:end_index]
         str=(str.replace(" ", "")).lower()
         if 'na' not in str and 'p' not in str:
             return str
@@ -197,7 +199,7 @@ def Trigandid(file,input_src):
                 if trigger_exist==False:#this for the cases that Trigger doesnt exist
                     for elm in item:
                         if elm.tag!="trigger":#This condition is satisfied and is not necessary
-                            rel_offset=find_ind(input_src,elm.text)
+                            rel_offset=find_ind(input_src.decode('utf-8'),(elm.text).decode('utf-8'))
                             if len(rel_offset)==0:
                                 continue
                             temp_elemrecord['rel_arg']= elm.text
@@ -222,7 +224,7 @@ def Trigandid(file,input_src):
                 if trigger_exist==False:#this for the cases that Trigger doesnt exist
                     for elm in item:
                         if elm.tag!="trigger":#This condition is satisfied and is not necessary
-                            rel_offset=find_ind(input_src,elm.text)
+                            rel_offset=find_ind(input_src.decode('utf-8'),(elm.text).decode('utf-8'))
                             if len(rel_offset)==0:
                                 continue
                             temp_elemrecord['rel_arg']= elm.text
@@ -234,18 +236,6 @@ def Trigandid(file,input_src):
                             break
                 temp_elemrecord.clear()
     return Array_of_Trigger# returns array of events and entity Id
-
-
-#def find_section(file,entity)
-
-def findingCBtags(file,entityif,keyword):
-    filestring=" "
-    with open(file,"r") as f:
-        for line in f:
-            filestring=filestring+" "+line
-
-
-
 
 myarray=[]#list of the poster that we get from the input text files
 path = 'input_src'
@@ -277,14 +267,13 @@ for src_Text in src_files:
     filestring=""
     str_s=""
    # myadd='data_orig/BT02162016/'+str(xfl[14:-13])+'.cmp.txt.xml'
+    cbtagged = open(cb_path)
+    filestring = cbtagged.read().decode('utf-8')
+    splitar=filestring.split("</post>")
 
-    with open(cb_path,'r') as mytagged: #reading the CB output for the old data xfl [14:13] works
-        for line in mytagged:# reading that gain and finding the poster name
-            filestring=filestring+" "+line# splitting the content of each poster seperately
-        splitar=filestring.split("</post>")
-    with open (src_Text,'r') as input_data:#
-            for line in input_data:
-                str_s=str_s+" "+line
+    input_file = open(src_Text)
+    str_s = input_file.read().decode('utf-8')
+
     finallarray=Trigandid(xfl,str_s)
     file_history_ent={}#keeping record of repition
     rel_flag=False
@@ -341,7 +330,7 @@ for src_Text in src_files:
                                         source_id='None'
                                         offset=None
 
-                                    # print (events.split()[-1],item[0],events.split()[-2],events.split()[-3],containsAny(filestring[ind-5:ind]),source_id,offset,str(len(source_id)),str(source))#Sample out put <NA> coming em-791 | admirable m-192 1222 9
+                                    print (events.split()[-1],item[0],events.split()[-2],events.split()[-3],containsAny(filestring[ind-5:ind]),source_id,offset,str(len(source_id)),str(source))#Sample out put <NA> coming em-791 | admirable m-192 1222 9
 
                                     if "relm" in events.split()[-1]:
                                         if rel_flag==False:
