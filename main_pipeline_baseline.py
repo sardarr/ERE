@@ -10,26 +10,25 @@ import glob
 from xml.etree import ElementTree
 from xml.dom import minidom
 from os.path import basename
+import re
 
+# Arguments=sys.argv
 
-with open('author_ranges_Chinese.json') as data_file:
+with open('author_ranges.json') as data_file:
     authors_offset = json.load(data_file)
 
 poster_hash={}
-map_author={}# Mapping a number betwwen 0-n for poster to find the priority
 
 def m_id_return(filename,offset):
     #this method receives the offset of trigger and finds the accotiated m-ID
-    try:
+    if filename in authors_offset:
         for x,v in authors_offset[filename].items():
-            for items in v:
-                if offset>=items[0] and offset<=items[1]:
-                    return x
-    except:
-        return None
-
-
-
+            if v:
+                for items in v:
+                    if offset>=items[0] and offset<=items[1]:
+                        return x
+        else:
+            return None
 def Getting_Authors(xml_out_file):
     Train_corpus=[]
     i=0
@@ -37,21 +36,18 @@ def Getting_Authors(xml_out_file):
         for line in f:
             soup = BeautifulSoup(line,'html.parser');
             starttag = soup.findAll("post")#finding all the post tags
+            authors_in_nw=soup.findAll("author")#this line is added for the eval nw data since author tage is different
+            if authors_in_nw:
+                Train_corpus.append(authors_in_nw[0].text)
             qoute_tag=soup.findAll("quote")
             for tag in starttag:
-                if tag["author"] not in Train_corpus:
-                    Train_corpus.append(tag["author"])
-                map_author[tag["author"]]=i
-                i+=1
+                if 'author'in tag.attrs:
+                    if tag["author"] not in Train_corpus:
+                        Train_corpus.append(tag["author"])
             for tag in qoute_tag:
-                try: #Some cases we dont have qauthor in quote tag, we collect all authors from text
+                if 'orig_author'in tag.attrs:
                     if tag["orig_author"] not in Train_corpus:
                         Train_corpus.append(tag["orig_author"])
-                    map_author[tag["orig_author"]]=i
-                    i+=1
-                except:
-                    continue
-
     return Train_corpus
 
 
@@ -64,15 +60,8 @@ def prettify(elem):
     return reparsed.toprettyxml(indent="  ")
 
 def find_ind(Source_str,string):
-    tmp_ar=[]
-    ind=0
-    try:
-        while Source_str.index(string,ind) :
-            ind=Source_str.index(string,ind)
-            tmp_ar.append(ind)
-            ind=ind+len(string)
-    except:
-        return tmp_ar
+    tmp_ar=[m.start() for m in re.finditer(string,Source_str)]
+    return tmp_ar
 
 def creat_xml_relat(ere_id,trigger,offset,length,belief_type,source,s_offset,s_length,s_ere_id):
     rltion = ET.SubElement(rltions, 'relation')
@@ -81,7 +70,7 @@ def creat_xml_relat(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
         trig = ET.SubElement(rltion, 'trigger')
         trig.set('offset',offset)
         trig.set('length',str(len(trigger)))
-        trig.text=trigger
+        trig.text=trigger.decode('utf-8')
     belfs = ET.SubElement(rltion, 'beliefs')
     belf = ET.SubElement(belfs, 'belief')
     belf.set('type',belief_type)
@@ -92,7 +81,7 @@ def creat_xml_relat(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
         src.set('ere_id',s_ere_id)
         src.set('offset',s_offset)
         src.set('length',s_length)
-        src.text=source
+        src.text=source.decode('utf-8')
     return ET.tostring(rltion, pretty_print=True,with_tail=False, xml_declaration=False)
 
 def creat_xml_event(ere_id,trigger,offset,length,belief_type,source,s_offset,s_length,s_ere_id):
@@ -102,7 +91,7 @@ def creat_xml_event(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
         trig = ET.SubElement(event, 'trigger')
         trig.set('offset',offset)
         trig.set('length',str(len(trigger)))
-        trig.text=trigger
+        trig.text=trigger.decode('utf-8')
     belfs = ET.SubElement(event, 'beliefs')
     belf = ET.SubElement(belfs, 'belief')
     belf.set('type',belief_type)
@@ -113,7 +102,7 @@ def creat_xml_event(ere_id,trigger,offset,length,belief_type,source,s_offset,s_l
         src.set('ere_id',s_ere_id)
         src.set('offset',s_offset)
         src.set('length',s_length)
-        src.text=source
+        src.text=source.decode('utf-8')
     return ET.tostring(event, pretty_print=True,with_tail=False, xml_declaration=False)
 
 
@@ -135,11 +124,7 @@ def list_ind(of_array,trigger_offset):
     return fin_ind
 
 postrs_id={}
-exclude = (set(string.punctuation))
-# exclude.remove('.')
-# exclude.remove('_')
-# exclude.remove('-')
-# exclude.add('...')
+exclude = set(string.punctuation)
 
 #This is to make sure that the tag behind word is completed and is not for previous word
 def containsAny(str):
@@ -250,7 +235,7 @@ xfiles=glob.glob(path_ere)#list of ere files
 for src_Text in src_files:
     poster_offset=[]
     Author_ere.clear()#This is a hashtable which stroes poster and it's id
-    # src_Text='input_src/ENG_DF_000183_20150408_F0000009C_31028-35268.xml'
+    # src_Text='input_src/ENG_DF_000259_20080711_G00A0F9B3.xml'
     base_path=basename(src_Text)
 
 
@@ -262,7 +247,7 @@ for src_Text in src_files:
         file_id=str(base_path[:-8])
     print(file_id)
     xfl=str(('input_ere/'+file_id+'.rich_ere.xml'))
-    myarray=Getting_Authors(cb_path)#adding the authors of each text files to the list My array
+    myarray=Getting_Authors(src_Text)#adding the authors of each text files to the list My array
     filestring=""
     str_s=""
    # myadd='data_orig/BT02162016/'+str(xfl[14:-13])+'.cmp.txt.xml'
@@ -280,7 +265,7 @@ for src_Text in src_files:
     root = ET.Element('committed_belief_doc')
     root.set('id','tree-000000000000000')
     Belief_ano = ET.SubElement(root, 'belief_annotations')
-    check=False
+    check=True
     for events in finallarray:
         phrasal_entity_flag=True
         tmp_arra=[]
@@ -298,9 +283,6 @@ for src_Text in src_files:
         else:
             tmp_arra.append([events.split()[0]])
         for item in tmp_arra:#tmp_arra contains
-             #for name, age in Author_ere.iteritems():
-              #      temp_ere=age.split(" ")
-                #if temp_ere[0] == item[1]:# it checks the ent id
                 try:
                         if len(item[0].split(" "))>1:
                             event_arr=item[0].split(" ")
