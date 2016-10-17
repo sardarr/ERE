@@ -168,7 +168,7 @@ def Trigandid(file,input_src):
     temp_elemrecord={}
     Array_of_Trigger=[]
     for child in root:
-        if child.tag == "relations"or"hopper":
+        if child.tag == "relations"or"hoppers":
             for item in child.iter('relation_mention'):
                 trigger_exist=False
                 for elm in item:
